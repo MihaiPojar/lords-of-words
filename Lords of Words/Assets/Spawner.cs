@@ -6,9 +6,6 @@ public class Spawner : MonoBehaviour {
 	public Canvas canvas;
 	public GameObject wordContainer;
 
-	// Groups
-	public GameObject[] groups;
-
 	// Use this for initialization
 	void Start () {
 		spawnNext ();
