@@ -2,8 +2,7 @@
 using System.Collections;
 
 public class Spawner : MonoBehaviour {
-
-	public Canvas canvas;
+	
 	public GameObject wordContainer;
 
 	// Groups
@@ -23,8 +22,7 @@ public class Spawner : MonoBehaviour {
 			spawnNext();
 		}
 	}
-
-
+		
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown ("space")) {
@@ -33,12 +31,10 @@ public class Spawner : MonoBehaviour {
 	}
 
 	private void spawnNext() {
-		int delta = Random.Range (-200, 200);
+		float delta = Random.Range(-10.0f, 0);
 
-		// Spawn Group at current Position
-		//Instantiate(groups[i], new Vector3(transform.position.x + delta, transform.position.y, transform.position.z), Quaternion.identity);
-		Object wContainer= Instantiate(wordContainer, new Vector3(canvas.transform.position.x + delta, canvas.transform.position.y, canvas.transform.position.z), Quaternion.identity, canvas.transform);
-
+		// Spawn Container at current Position
+		Instantiate(wordContainer, new Vector3(transform.position.x + delta, transform.position.y), Quaternion.identity);
 
 	}
 }
