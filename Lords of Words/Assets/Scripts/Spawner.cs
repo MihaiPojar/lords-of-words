@@ -93,8 +93,6 @@ public class Spawner : MonoBehaviour {
 			spawnDelay = Mathf.Max (spawnDelay - 0.01f, 0.8f);
 		}
 
-		Debug.Log (wordsSpawned);
-
 		int specialEffect = chance [Random.Range (0, chance.Length)];
 		float delta = Random.Range(-5.0f, 0);
 
@@ -110,7 +108,6 @@ public class Spawner : MonoBehaviour {
 	public void GameOver() {
 		// what to do on game over
 		StopCoroutine("TimerEvent");
-		Time.timeScale = 0;
 		foreach(GameObject container in GameObject.FindGameObjectsWithTag ("WordContainer")) {
 			//container.SetInactive ();
 			container.GetComponent<WordContainerController>().SetInactive();

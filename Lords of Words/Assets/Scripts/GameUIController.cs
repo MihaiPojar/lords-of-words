@@ -62,9 +62,14 @@ public class GameUIController : MonoBehaviour {
 		}
 	}
 
+	void Awake() {
+		DontDestroyOnLoad (transform.root.gameObject);
+	}
+
 	void GameOver() {
 		// what to do on game over
 		spawner.GameOver();
 		// TODO: load next scene and pass the highscore
+		Application.LoadLevel(2);
 	}
 }
