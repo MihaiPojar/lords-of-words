@@ -27,6 +27,10 @@ public class GameUIController : MonoBehaviour {
 		if (Input.GetKeyDown ("2")) {
 			DecreaseLives ();
 		}
+
+		if (Input.GetKeyDown ("escape")) {
+			GameOver ();
+		}
 	}
 
 	private void SetCurrentScore(int newScore) {

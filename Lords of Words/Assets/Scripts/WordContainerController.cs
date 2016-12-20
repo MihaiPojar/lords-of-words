@@ -46,13 +46,10 @@ public class WordContainerController : MonoBehaviour {
 
 	private IEnumerator DeathTimer()
 	{
-		while(true)
-		{
-			yield return new WaitForSeconds(1f); // wait for two seconds
-			rb2d.Sleep();
-			active = false;
-			gameUI.DecreaseLives ();
-		}
+		yield return new WaitForSeconds(1f); // wait for two seconds
+		rb2d.Sleep();
+		active = false;
+		gameUI.DecreaseLives ();
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {

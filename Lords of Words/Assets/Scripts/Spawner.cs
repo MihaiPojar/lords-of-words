@@ -29,7 +29,7 @@ public class Spawner : MonoBehaviour {
 	}
 
 	private void spawnNext() {
-		float delta = Random.Range(-10.0f, 0);
+		float delta = Random.Range(-5.0f, 0);
 
 		// Spawn Container at current Position
 		WordContainerController container = Instantiate(wordContainer, new Vector3(transform.position.x + delta, transform.position.y), Quaternion.identity) as WordContainerController;
