@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class WordContainerController : MonoBehaviour {
 
-	//public Canvas canvas;
 	public Letter letterPrefab;
 	public Sprite[] sprites;
+	public GameUIController gameUI;
 
 	static string[] words = { "andra", "cristina", "daniel", "diana", "mihai" };
 	private Rigidbody2D rb2d;
@@ -15,6 +15,10 @@ public class WordContainerController : MonoBehaviour {
 	private int nextLetter;
 	private string chosenWord;
 	private bool active;
+
+	public void SetGameUI(GameUIController gameUI) {
+		this.gameUI = gameUI;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -47,6 +51,7 @@ public class WordContainerController : MonoBehaviour {
 			yield return new WaitForSeconds(1f); // wait for two seconds
 			rb2d.Sleep();
 			active = false;
+			gameUI.DecreaseLives ();
 		}
 	}
 
@@ -157,6 +162,7 @@ public class WordContainerController : MonoBehaviour {
 			Debug.Log ("Destroy " + chosenWord);
 			gameObject.SetActive (false);
 			Destroy (gameObject);
+			gameUI.IncreaseScore (100);
 		}
 	}
 
@@ -178,5 +184,13 @@ public class WordContainerController : MonoBehaviour {
 		else {
 			BadLetter ();
 		}
+	}
+
+	public void SetActive() {
+		active = true;
+	}
+
+	public void SetInactive() {
+		active = false;
 	}
 }
