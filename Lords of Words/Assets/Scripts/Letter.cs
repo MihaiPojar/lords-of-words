@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Letter : MonoBehaviour {
 
-	private int SCALE = 50;
+	private int SCALE = 40;
 
 	private SpriteRenderer spriteRenderer;
 	private bool dark;

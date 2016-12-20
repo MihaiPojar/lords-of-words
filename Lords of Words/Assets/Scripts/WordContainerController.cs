@@ -39,7 +39,8 @@ public class WordContainerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		rb2d.velocity = new Vector2 (0, -speed);
+		rb2d.velocity = new Vector2 (Random.Range(-0.9f,0.9f), -speed);
+		rb2d.AddTorque (Random.Range (-0.9f, 0.9f));
 		nextLetter = 0;
 		active = true;
 	}
@@ -71,7 +72,8 @@ public class WordContainerController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.CompareTag ("Ground")) {
-			rb2d.AddTorque (Random.Range(-20f, 0f));
+			rb2d.AddTorque (Random.Range(-1f, 0f));
+			rb2d.velocity = Vector3.zero;
 			StartCoroutine ("DeathTimer");
 		}
 	}
