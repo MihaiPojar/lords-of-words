@@ -11,10 +11,26 @@ public class WordContainerController : MonoBehaviour {
 	static string[] words = { "andra", "cristina", "daniel", "diana", "mihai" };
 	private Rigidbody2D rb2d;
 
-	private Letter[] letters = new Letter[10];
+	private Letter[] letters = new Letter[15];
 	private int nextLetter;
 	private string chosenWord;
 	private bool active;
+	private int value;
+	private int specialEffect;
+	private float speed;
+
+	public void SetEffect(int effect) {
+		specialEffect = effect;
+		WriteWord ();
+	}
+
+	public void SetSpeed (float speed) {
+		this.speed = speed;
+	}
+
+	public void SetValue(int newValue) {
+		value = newValue;
+	}
 
 	public void SetGameUI(GameUIController gameUI) {
 		this.gameUI = gameUI;
@@ -23,9 +39,8 @@ public class WordContainerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		rb2d.velocity = new Vector2 (0, -1.5f);
+		rb2d.velocity = new Vector2 (0, -speed);
 		nextLetter = 0;
-		WriteWord ();
 		active = true;
 	}
 
@@ -35,6 +50,8 @@ public class WordContainerController : MonoBehaviour {
 		for (int i = 0; i < chosenWord.Length; i++) {
 			Letter l = Instantiate (letterPrefab, new Vector3 (transform.position.x + i, transform.position.y), Quaternion.identity, transform) as Letter;
 			l.SetArtworkSprite (sprites [chosenWord[i] - 'a']);
+			l.SetSpecialEffect (specialEffect);
+
 			letters [i] = l;
 		}
 	}
@@ -54,7 +71,6 @@ public class WordContainerController : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.CompareTag ("Ground")) {
-			Debug.Log ("Am ajuns jos");
 			rb2d.AddTorque (Random.Range(-20f, 0f));
 			StartCoroutine ("DeathTimer");
 		}
@@ -156,30 +172,31 @@ public class WordContainerController : MonoBehaviour {
 					//Destroy (letter);
 				}
 			}
-			Debug.Log ("Destroy " + chosenWord);
 			gameObject.SetActive (false);
 			Destroy (gameObject);
-			gameUI.IncreaseScore (100);
+			gameUI.IncreaseScore (value);
 		}
 	}
 
-	void BadLetter() {
-		for (int counter = 0; counter < nextLetter; counter++) {
-			letters [counter].Brighten ();
+	void BadLetter(char ch) {
+		if (nextLetter > 0) { 
+			for (int counter = 0; counter < nextLetter; counter++) {
+				letters [counter].Brighten ();
+			}
+			nextLetter = 0;
+			WriteLetter (ch);
 		}
-		nextLetter = 0;
 	}
 
 	void WriteLetter(char ch) {
 		if (!active) {
 			return;
 		}
-		Debug.Log (ch);
 		if (chosenWord [nextLetter] == ch) {
 			GoodLetter ();
 		}
 		else {
-			BadLetter ();
+			BadLetter (ch);
 		}
 	}
 
