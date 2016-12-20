@@ -6,23 +6,23 @@ public class MainController : MonoBehaviour {
 
 	public Text scoreText;
 
-	private int score;
+	public int score;
 
 	// Use this for initialization
-	void Start () {
+	public void Start () {
 		score = 0;
 		showScore ();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	public void Update () {
 		if (Input.GetKeyDown ("space")) {
 			score++;
 			showScore ();
 		}
 	}
 		
-	void showScore() {
+	public void showScore() {
 		scoreText.text = "Your score: " + score;
 	}
 }
