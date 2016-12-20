@@ -31,7 +31,7 @@ public class ScoreController : MonoBehaviour
 
 	IEnumerator GetScores()
 	{
-		gameObject.guiText.text = "Loading Scores";
+		gameObject.GetComponent<GUIText>().text = "Loading Scores";
 		WWW highscore_get = new WWW(gethighscoreURL);
 		yield return highscore_get;
 
@@ -41,7 +41,7 @@ public class ScoreController : MonoBehaviour
 		}
 		else
 		{
-			gameObject.guiText.text = highscore_get.text;
+			gameObject.GetComponent<GUIText>().text = highscore_get.text;
 		}
 	}
 
