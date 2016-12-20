@@ -45,11 +45,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DetectKey.cs" />
-     <Compile Include="Assets\Letter.cs" />
-     <Compile Include="Assets\MainController.cs" />
-     <Compile Include="Assets\Spawner.cs" />
-     <Compile Include="Assets\WordContainerController.cs" />
+     <Compile Include="Assets\Scripts\DetectKey.cs" />
+     <Compile Include="Assets\Scripts\Letter.cs" />
+     <Compile Include="Assets\Scripts\MainController.cs" />
+     <Compile Include="Assets\Scripts\Spawner.cs" />
+     <Compile Include="Assets\Scripts\WordContainerController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Programe/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
