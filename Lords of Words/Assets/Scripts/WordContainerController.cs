@@ -4,24 +4,54 @@ using UnityEngine.UI;
 
 public class WordContainerController : MonoBehaviour {
 
-	//public Canvas canvas;
 	public Letter letterPrefab;
 	public Sprite[] sprites;
+	public GameUIController gameUI;
 
-	static string[] words = { "andra", "cristina", "daniel", "diana", "mihai" };
+	static string[] words = { "andra", "cristina", "daniel", "diana", "mihai",
+		"is","on","in","two","bus","little", "three","after","bandage","daughter","eighteen","economy","godfather","january","keyboard",
+		"language","machine","material","paragraph","qualification","unbearable","we", "are", "looking", "at", "the", "moon","moon",
+		"writing","sentences","he", "is", "going", "to", "school", "now","you", "are", "listening", "to", "me", "with", "open", "ears",
+		"he", "works", "every", "day" ,"they", "listen", "to", "music", "every", "evening", "she", "go", "shopping", "every", "thursday",
+		"he", "travels", "every", "summer","eat", "cereals", "every", "morning", "you", "buy", "news", "paper", "today","sunset", "weightlifting",
+		"fairy", "princess","another","skylark","greyhound", "among", "basic","training","broad","earth", "magic","wire","unthinkable",
+		"happy","pleasure","garden","history","industry", "famous","sad","tricky","necessary","uneven","melancholy","needle","capable",
+		"starry","shiny","bright","stars","science","scratch","latch","match","forgetful","unforgivable","photography","television",
+		"weapon","warehouse","wedding","whale","wheel","withdraw","zipper"
+	};
 	private Rigidbody2D rb2d;
 
-	private Letter[] letters = new Letter[10];
+	private Letter[] letters = new Letter[15];
 	private int nextLetter;
 	private string chosenWord;
 	private bool active;
+	private int value;
+	private int specialEffect;
+	private float speed;
+
+	public void SetEffect(int effect) {
+		specialEffect = effect;
+		WriteWord ();
+	}
+
+	public void SetSpeed (float speed) {
+		this.speed = speed;
+	}
+
+	public void SetValue(int newValue) {
+		value = newValue;
+	}
+
+	public void SetGameUI(GameUIController gameUI) {
+		this.gameUI = gameUI;
+	}
 
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		rb2d.velocity = new Vector2 (0, -1.5f);
+		rb2d.velocity = new Vector2 (Random.Range(-0.9f,0.9f), -speed);
+		rb2d.AddTorque (Random.Range (-0.9f, 0.9f));
 		nextLetter = 0;
-		WriteWord ();
 		active = true;
 	}
 
@@ -31,6 +61,8 @@ public class WordContainerController : MonoBehaviour {
 		for (int i = 0; i < chosenWord.Length; i++) {
 			Letter l = Instantiate (letterPrefab, new Vector3 (transform.position.x + i, transform.position.y), Quaternion.identity, transform) as Letter;
 			l.SetArtworkSprite (sprites [chosenWord[i] - 'a']);
+			l.SetSpecialEffect (specialEffect);
+
 			letters [i] = l;
 		}
 	}
@@ -42,18 +74,16 @@ public class WordContainerController : MonoBehaviour {
 
 	private IEnumerator DeathTimer()
 	{
-		while(true)
-		{
-			yield return new WaitForSeconds(1f); // wait for two seconds
-			rb2d.Sleep();
-			active = false;
-		}
+		yield return new WaitForSeconds(1f); // wait for two seconds
+		rb2d.Sleep();
+		active = false;
+		gameUI.DecreaseLives ();
 	}
 
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.CompareTag ("Ground")) {
-			Debug.Log ("Am ajuns jos");
-			rb2d.AddTorque (Random.Range(-20f, 0f));
+			rb2d.AddTorque (Random.Range(-1f, 0f));
+			rb2d.velocity = Vector3.zero;
 			StartCoroutine ("DeathTimer");
 		}
 	}
@@ -154,29 +184,39 @@ public class WordContainerController : MonoBehaviour {
 					//Destroy (letter);
 				}
 			}
-			Debug.Log ("Destroy " + chosenWord);
 			gameObject.SetActive (false);
 			Destroy (gameObject);
+			gameUI.IncreaseScore (value);
 		}
 	}
 
-	void BadLetter() {
-		for (int counter = 0; counter < nextLetter; counter++) {
-			letters [counter].Brighten ();
+	void BadLetter(char ch) {
+		if (nextLetter > 0) { 
+			for (int counter = 0; counter < nextLetter; counter++) {
+				letters [counter].Brighten ();
+			}
+			nextLetter = 0;
+			WriteLetter (ch);
 		}
-		nextLetter = 0;
 	}
 
 	void WriteLetter(char ch) {
 		if (!active) {
 			return;
 		}
-		Debug.Log (ch);
 		if (chosenWord [nextLetter] == ch) {
 			GoodLetter ();
 		}
 		else {
-			BadLetter ();
+			BadLetter (ch);
 		}
+	}
+
+	public void SetActive() {
+		active = true;
+	}
+
+	public void SetInactive() {
+		active = false;
 	}
 }
