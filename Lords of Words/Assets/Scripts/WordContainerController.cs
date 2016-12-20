@@ -8,7 +8,17 @@ public class WordContainerController : MonoBehaviour {
 	public Sprite[] sprites;
 	public GameUIController gameUI;
 
-	static string[] words = { "andra", "cristina", "daniel", "diana", "mihai" };
+	static string[] words = { "andra", "cristina", "daniel", "diana", "mihai",
+		"is","on","in","two","bus","little", "three","after","bandage","daughter","eighteen","economy","godfather","january","keyboard",
+		"language","machine","material","paragraph","qualification","unbearable","we", "are", "looking", "at", "the", "moon","moon",
+		"writing","sentences","he", "is", "going", "to", "school", "now","you", "are", "listening", "to", "me", "with", "open", "ears",
+		"he", "works", "every", "day" ,"they", "listen", "to", "music", "every", "evening", "she", "go", "shopping", "every", "thursday",
+		"he", "travels", "every", "summer","eat", "cereals", "every", "morning", "you", "buy", "news", "paper", "today","sunset", "weightlifting",
+		"fairy", "princess","another","skylark","greyhound", "among", "basic","training","broad","earth", "magic","wire","unthinkable",
+		"happy","pleasure","garden","history","industry", "famous","sad","tricky","necessary","uneven","melancholy","needle","capable",
+		"starry","shiny","bright","stars","science","scratch","latch","match","forgetful","unforgivable","photography","television",
+		"weapon","warehouse","wedding","whale","wheel","withdraw","zipper"
+	};
 	private Rigidbody2D rb2d;
 
 	private Letter[] letters = new Letter[15];
